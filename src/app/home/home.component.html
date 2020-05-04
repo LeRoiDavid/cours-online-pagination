@@ -1,0 +1,40 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">N° tél</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="pagination">
+          <tr *ngFor="let record of pagination.records">
+            <th> {{record?.firstName}} </th>
+            <td> {{record?.lastName}} </td>
+            <td> {{record?.email}} </td>
+            <td> {{record.phoneNumber}}  </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="..." >
+    <ul class="pagination justify-content-center" *ngIf="pagination">
+        <li class="page-item " [ngClass]="{'disabled': pagination.currentPage == 0 }">
+        <a class="page-link" (click)="goToPrev()"
+         
+        >Previous</a>
+        </li>
+
+        <li class="page-item" *ngFor="let index of getIndex(pagination.pages); let i = index"
+             [ngClass]="{'active': i == pagination.currentPage}">
+            <a class="page-link" href="#" (click)="onChangePage(i)"> {{i}} </a>
+        </li>
+        
+        <li class="page-item" [ngClass]="{'disabled': pagination.currentPage == pagination.pages }">
+         <a class="page-link" (click)="goToNext()"   >Next</a>
+        </li>
+    </ul>
+    </nav>
+
+</div>
