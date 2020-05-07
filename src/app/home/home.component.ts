@@ -10,7 +10,7 @@ import { IPagination } from '../interfaces/IPagination';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public limit = 50
+  public limit = 10
   public offset = 0
   public organizers: IOrganizer[] = []
   public pagination: IPagination<IOrganizer>
@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
     this.OrganiService.getOrganizers(this.limit, this.offset).subscribe(
       response => { 
         this.pagination = response
-        console.log(this.pagination)
       },
       error =>{ console.log(error) }
     )
@@ -36,17 +35,17 @@ export class HomeComponent implements OnInit {
   }
 
   goToPrev(){
-    this.offset = this.pagination.offset - 1 + this.limit
+    this.offset = (this.pagination.currentPage -2) * this.pagination.limit
     this.getOrganizers();
   }
 
   goToNext(){
-    this.offset = this.pagination.offset + 1  
+    this.offset = this.pagination.currentPage *  this.pagination.limit
     this.getOrganizers();
   }
 
   onChangePage(index){
-    this.offset = this.offset * this.limit  + index
+    this.offset = index * (this.pagination.limit) 
     this.getOrganizers();
   }
   
